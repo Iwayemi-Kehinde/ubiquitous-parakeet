@@ -9,6 +9,6 @@ userRouter.put("/me", verifyToken, updateMe)
 userRouter.put("/me/password", verifyToken, updatePassword)
 userRouter.put("/me/addresses", verifyToken, updateAddresses)
 userRouter.post('/forgot-password', forgotPassword);
-userRouter.post('/reset-password/:token', resetPassword);
+userRouter.post('/reset-password', resetPassword);
 
 module.exports = userRouter

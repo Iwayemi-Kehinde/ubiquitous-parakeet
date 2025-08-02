@@ -71,16 +71,15 @@ exports.forgotPassword = async (req, res, next) => {
         if (!user) return res.status(404).json({ message: "user not found" })
 
         const token = crypto.randomBytes(32).toString('hex')
-        const hashed = crypto.createHash('sha256').update(token).digest('hex');
 
-        user.resetPasswordToken = hashed
+        user.resetPasswordToken = token
         user.resetPasswordExpires = Date.now() + 3600000
 
         await user.save()
 
-        console.log(`Reset link: http://localhost:5000/reset-password/${token}`);
+        console.log(`Reset OTP: ${token}`);
 
-        res.json({ message: 'Password reset link sent to email' });
+        res.json({ message: 'Password Token sent to email'});
 
     } catch (error) {
         res.status(500).json({ message: 'Error occures in the reset passwor section' })
@@ -88,22 +87,20 @@ exports.forgotPassword = async (req, res, next) => {
 }
 
 
-// POST /reset-password/:token
+// POST /reset-password
 
 exports.resetPassword = async (req, res) => {
-    const hashed = crypto.createHash('sha256').update(req.params.token).digest('hex');
-  
-    const user = await User.findOne({
-      resetPasswordToken: hashed,
-      resetPasswordExpires: { $gt: Date.now() }
-    });
-  
-    if (!user) return res.status(400).json({ message: 'Invalid or expired token' });
-  
-    user.password = req.body.newPassword;
-    user.resetPasswordToken = undefined;
-    user.resetPasswordExpires = undefined;
-    await user.save();
-  
-    res.json({ message: 'Password has been reset' });
+    const {otpToken, newPassword} = req.body
+    const user = await User.findById(req.user.id)
+    if (!user) return res.status(404).json({ message: 'user not found' });
+
+    if(user.resetPasswordToken && user.resetPasswordExpires > Date.now() && user.resetPasswordToken == otpToken) {
+        user.password = newPassword;
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpires = undefined;
+        await user.save();
+       return res.json({ message: 'Password has been reset' });
+    } else {
+        return res.status(400).json({ message: 'Invalid or expired token' });
+    }
   };
