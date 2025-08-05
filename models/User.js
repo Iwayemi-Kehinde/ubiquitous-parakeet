@@ -19,7 +19,7 @@ const userSchema = mongoose.Schema({
     ],
     resetPasswordToken: { type: String },
     resetPasswordExpires: { type: Date }
-}, { timeStamps: true })
+}, { timestamps: true })
 
 userSchema.pre("save", async function (next) {
     if (!this.isModified("password")) return next()
