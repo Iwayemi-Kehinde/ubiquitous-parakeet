@@ -5,48 +5,51 @@ import { FaSearch, FaHeart, FaShoppingCart, FaUser, FaBars } from "react-icons/f
 
 
 export default function Navbar() {
-    return (
-        <OverallContainer>
-            <Logo>E Commerce</Logo>
+  return (
+    <OverallContainer>
+      <Logo>E Commerce</Logo>
 
-            <NavLinks>
-                <li>
-                    <Link to="/">Home</Link>
-                </li>
-                <li>
-                    <Link to="/shop">Shop</Link>
-                </li>
-                <li>
-                    <Link to="/categories">Categories</Link>
-                </li>
-                <li>
-                    <Link to="/deals">Deals</Link>
-                </li>
-            </NavLinks>
+      <NavLinks>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/shop">Shop</Link>
+        </li>
+        <li>
+          <Link to="/categories">Categories</Link>
+        </li>
+        <li>
+          <Link to="/deals">Deals</Link>
+        </li>
+      </NavLinks>
 
-            <SearchContainer>
-                <input type="search" placeholder="Search...." />
-                <button>
-                    <FaSearch />
-                </button>
-            </SearchContainer>
+      <SearchContainer>
+        <input type="search" placeholder="Search...." />
+        <button>
+          <FaSearch />
+        </button>
+      </SearchContainer>
 
-            <IconContainer>
-                <IconWrapper>
-                    <FaHeart />
-                </IconWrapper>
-                <IconWrapper>
-                    <FaShoppingCart />
-                </IconWrapper>
-                <IconWrapper>
-                    <FaUser />
-                </IconWrapper>
-                <MobileMenu>
-                    <FaBars />
-                </MobileMenu>
-            </IconContainer>
-        </OverallContainer>
-    );
+      <IconContainer>
+        <IconWrapper>
+          <FaHeart />
+        </IconWrapper>
+        <IconWrapper>
+          <FaShoppingCart />
+        </IconWrapper>
+        <Link to="/sign-up">
+          <IconWrapper>
+            <FaUser color="#444" />
+          </IconWrapper>
+        </Link>
+
+        <MobileMenu>
+          <FaBars />
+        </MobileMenu>
+      </IconContainer>
+    </OverallContainer>
+  );
 }
 
 
@@ -56,7 +59,6 @@ const OverallContainer = styled.div`
   display: flex;
   padding: 20px 4%;
   box-shadow: 0px 0px 4px grey;
-  position: fixed;
   width: 100%;
   justify-content: space-between;
   align-items: center;
@@ -111,7 +113,7 @@ button {
     right: 0;
     top: 0;
     bottom: 0;
-    padding: 8px;
+    padding: 12px;
     border: none;
     cursor: pointer;
     }

@@ -1,9 +1,12 @@
-import { Routes, Route } from "react-router-dom";
+import React from "react"
+import { Route, Routes } from "react-router-dom";
 import Navbar from './components/Navbar'
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Deals from "./pages/Deals";
 import Shop from "./pages/Shop";
+import Signup from "./pages/Signup";
+import Login from "./pages/Login";
 
 function App() {
 
@@ -11,10 +14,12 @@ function App() {
     <>
       <Navbar />
       <Routes>
-        <Route element={<Home />} to={"/"}/>
-        <Route element={<About />} to={"/about"}/>
-        <Route element={<Deals />} to={"/deals"}/>
-        <Route element={<Shop />} to={"/shop"}/>
+        <Route  path={"/"} element={<Home />}/>
+        <Route  path={"/about"} element={<About />}/>
+        <Route path={"/deals"} element={<Deals />} />
+        <Route  path={"/shop"} element={<Shop />}/>
+        <Route  path={"/sign-up"} element={<Signup />}/>
+        <Route  path={"/login"} element={<Login />}/>
       </Routes>
     </>
   )
