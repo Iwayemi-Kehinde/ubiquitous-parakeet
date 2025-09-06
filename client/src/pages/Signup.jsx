@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
+import axios from 'axios'
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+
 export default function Signup() {
   const [formData, setFormData] = useState({
     name: "",
@@ -9,14 +13,39 @@ export default function Signup() {
     confirmPassword: "",
   });
 
+  const [loading, setLoading] = useState(false)
+
+  const [clicked, setClicked] = useState(false)
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate()
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add your API call here
-    console.log("Sign Up Data:", formData);
+    if (formData.password !== formData.confirmPassword) {
+      toast.error("Password don't match")
+    } else {
+      try {
+        setLoading(true)
+        setClicked(true)
+        await axios.post('http://localhost:5000/api/auth/register', formData)
+        navigate('/login')
+        toast.success("Signup successful!");
+
+        // redirect after short delay (so toast shows)
+        setTimeout(() => {
+          navigate("/login");
+        }, 1500);
+      } catch (error) {
+        toast.error(error.response.data.message)
+      } finally {
+        setLoading(false)
+        setClicked(false)
+      }
+    }
   };
 
   return (
@@ -66,18 +95,42 @@ export default function Signup() {
             required
           />
 
-          <SubmitButton type="submit">Sign Up</SubmitButton>
+          <SubmitButton type="submit" disabled={clicked}>
+            {loading ? (
+              <span className="spinner"></span>
+            ) : (
+              "Sign Up"
+            )}
+          </SubmitButton>
+
+          {/* Simple CSS for spinner */}
+          <style jsx="true">{`
+        .spinner {
+          width: 18px;
+          height: 18px;
+          border: 3px solid white;
+          border-top: 3px solid transparent;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}</style>
+
         </Form>
 
         <FooterText>
-          Already have an account? 
-      <Link to="/login" style={{
-              color: "#007bff",
-              textDecoration: "none",
-              fontWeight: "600"
-          }}>Sign up</Link>
+          Already have an account?   <Link to="/login" style={{
+            color: "#007bff",
+            textDecoration: "none",
+            fontWeight: "600"
+          }}>Login</Link>
         </FooterText>
+
       </FormWrapper>
+
     </PageContainer>
   );
 }
@@ -142,6 +195,10 @@ const SubmitButton = styled.button`
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &:hover {
     background: #0056b3;

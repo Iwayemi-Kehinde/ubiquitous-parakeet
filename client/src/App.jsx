@@ -1,5 +1,6 @@
 import React from "react"
 import { Route, Routes } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 import Navbar from './components/Navbar'
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -21,6 +22,7 @@ function App() {
         <Route  path={"/sign-up"} element={<Signup />}/>
         <Route  path={"/login"} element={<Login />}/>
       </Routes>
+      <Toaster position="top-right" reverseOrder={false} />
     </>
   )
 }
