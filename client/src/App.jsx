@@ -8,6 +8,7 @@ import Deals from "./pages/Deals";
 import Shop from "./pages/Shop";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
+import Profile from "./pages/Profile";
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
         <Route  path={"/shop"} element={<Shop />}/>
         <Route  path={"/sign-up"} element={<Signup />}/>
         <Route  path={"/login"} element={<Login />}/>
+        <Route  path={"/profile"} element={<Profile />}/>
       </Routes>
       <Toaster position="top-right" reverseOrder={false} />
     </>

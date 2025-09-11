@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { login } from "../store/authSlice";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -9,6 +11,8 @@ export default function Login() {
     email: "",
     password: "",
   });
+
+  const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
   const [clicked, setClicked] = useState(false);
@@ -25,9 +29,9 @@ export default function Login() {
       setLoading(true);
       setClicked(true);
 
-      await axios.post("http://localhost:5000/api/auth/login", formData);
+      const response = await axios.post("http://localhost:5000/api/auth/login", formData, {withCredentials: true});
 
-      toast.success("Login successful!");
+      dispatch(login(response.data.accessToken));
 
       // redirect after short delay
       setTimeout(() => {

@@ -1,10 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { logout } from "../store/authSlice";
 import { FaSearch, FaHeart, FaShoppingCart, FaUser, FaBars } from "react-icons/fa";
 
 
 export default function Navbar() {
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   return (
     <OverallContainer>
       <Logo>E Commerce</Logo>
@@ -38,7 +41,7 @@ export default function Navbar() {
         <IconWrapper>
           <FaShoppingCart />
         </IconWrapper>
-        <Link to="/sign-up">
+        <Link to={isLoggedIn ? "/profile" : "/login"}>
           <IconWrapper>
             <FaUser color="#444" />
           </IconWrapper>

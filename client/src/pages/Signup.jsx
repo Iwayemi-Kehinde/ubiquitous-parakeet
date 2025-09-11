@@ -31,7 +31,7 @@ export default function Signup() {
       try {
         setLoading(true)
         setClicked(true)
-        await axios.post('http://localhost:5000/api/auth/register', formData)
+        await axios.post('http://localhost:5000/api/auth/register', formData, {withCredentials: true})
         navigate('/login')
         toast.success("Signup successful!");
 
