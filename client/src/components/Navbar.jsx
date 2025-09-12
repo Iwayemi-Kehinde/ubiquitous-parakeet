@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { logout } from "../store/authSlice";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 import { FaSearch, FaHeart, FaShoppingCart, FaUser, FaBars } from "react-icons/fa";
 
 
 export default function Navbar() {
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const { isLoggedIn } = useContext(AuthContext);
   return (
     <OverallContainer>
       <Logo>E Commerce</Logo>

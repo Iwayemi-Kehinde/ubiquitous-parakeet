@@ -36,11 +36,6 @@ export default function Profile() {
     fetchUser();
   }, [navigate]);
 
-  const handleLogout = () => {
-    localStorage.removeItem("accessToken");
-    toast.success("Logged out successfully!");
-    navigate("/login");
-  };
 
   if (!user) return null; // could put a spinner here
 
@@ -54,10 +49,10 @@ export default function Profile() {
           <Value>{user.name}</Value>
 
           <Label>Email:</Label>
-          <Value>{user.email}</Value>
+          <Value>{user.email}</Value>s
         </ProfileInfo>
 
-        <LogoutButton onClick={() => dispatch(logout())}>Logout</LogoutButton>
+        <LogoutButton>Logout</LogoutButton>
       </ProfileWrapper>
     </PageContainer>
   );

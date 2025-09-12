@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
-import { login } from "../store/authSlice";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -12,7 +12,7 @@ export default function Login() {
     password: "",
   });
 
-  const dispatch = useDispatch();
+  const { login } = useContext(AuthContext);
 
   const [loading, setLoading] = useState(false);
   const [clicked, setClicked] = useState(false);
@@ -31,9 +31,10 @@ export default function Login() {
 
       const response = await axios.post("http://localhost:5000/api/auth/login", formData, {withCredentials: true});
 
-      dispatch(login(response.data.accessToken));
+      login(response.data.accessToken, response.data.user);
 
-      // redirect after short delay
+      toast.success("Login successful!");
+
       setTimeout(() => {
         navigate("/");
       }, 1500);
